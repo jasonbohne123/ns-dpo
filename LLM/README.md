@@ -1,4 +1,4 @@
-# NS-DPO: Non Stationary Direct Preference Optimization
+# LLM experiment codebase for NS-DPO: Non Stationary Direct Preference Optimization
 
 Our implementation of this repository is an adaptation from eric-mitchell's [DPO repository](https://github.com/eric-mitchell/direct-preference-optimization).
 
