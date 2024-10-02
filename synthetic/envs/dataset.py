@@ -231,6 +231,13 @@ def create_offline_data(
             )
             optactions = opt_agent.ret_action_prob(states).argmax(axis=-1)
 
+            # check reward difference
+            dataset = np.concatenate([states, actions], axis = 1)
+            if config.algo == "dpo":
+                _, rewdiffs = opt_agent.calc_log_ratio_diff(dataset)
+            elif config.algo == "sigmoidloss":
+                _, rewdiffs = opt_agent.calc_rew_diff(dataset)
+
             train_states = states[:num_train, :]
             train_actions = actions[:num_train, :]
             train_tsteps = np.ones((train_states.shape[0], 1))
@@ -240,6 +247,8 @@ def create_offline_data(
             valid_tsteps = np.ones((valid_states.shape[0], 1))
             valid_optactions = optactions[num_train:]
             opt_agents.append(opt_agent)
+            train_rewdiffs = rewdiffs[:num_train]
+            valid_rewdiffs = rewdiffs[num_train:]
 
         train_data = np.concatenate(
             [train_states, train_actions, train_tsteps],
