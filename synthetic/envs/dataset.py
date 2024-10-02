@@ -118,6 +118,7 @@ def create_offline_data(
                     actions_i,
                     mode=mode_reward
                 )
+                
                 actions_i = apply_preference(
                     preference,
                     actions_i
@@ -188,7 +189,7 @@ def create_offline_data(
                 config.odata.train_per_step + config.odata.valid_per_step
             )
             num_train = config.odata.num_steps * config.odata.train_per_step
-            opt_param = rparams
+            opt_param = rparams[0]
 
             # sample states
             states = list()
