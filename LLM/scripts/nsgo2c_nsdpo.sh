@@ -1,13 +1,13 @@
 #!/bin/bash
 
-DIRECTORY_SFT=FIND_AFTER_TRAINING_SFT
+DIRECTORY_SFT=jbohne/nsgo2c-sft-tiny-mistral_2025-01-06_10-22-27_133993
 
 USE_WANDB=false
 WANDB_KEY=SET_VALUE
 WANDB_ENTITY=SET_VALUE
 
 MODEL_NAME=tiny-mistral
-# MODEL_NAME=llama2-7b-chat-hf
+#MODEL_NAME=llama-3.2-1B-Instruct
 EXP_NAME_ORIG=nsgo2c-sft-$MODEL_NAME
 TARGET_COUNTRY=Germany
 
@@ -22,7 +22,7 @@ do
         batch_size=24 eval_batch_size=12 trainer=BasicTrainer sample_during_eval=false \
         ++wandb.key=$WANDB_KEY ++wandb.enabled=$USE_WANDB \
         ++wandb.entity=$WANDB_ENTITY ++wandb.project=nsdpo ++test_dataset=false \
-        ++dataset.timesteps=100 ++dataset.force_new=true ++dataset.sample_to_size=10000 \
+        ++dataset.timesteps=100 ++dataset.force_new=true ++dataset.sample_to_size=1000 \
         ++dataset.coef_shift=1.0 ++dataset.threshold_high=0.99 ++dataset.threshold_low=0.01 \
         ++dataset.country2=$TARGET_COUNTRY ++dataset.min_diff=0.2
 done

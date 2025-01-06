@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIRECTORY_SFT=FIND_AFTER_TRAINING_SFT
+DIRECTORY_SFT=jbohne/nsgo2c-sft-tiny-mistral_2025-01-06_10-22-27_133993
 
 USE_WANDB=false
 WANDB_KEY=SET_VALUE
@@ -14,7 +14,7 @@ TARGET_COUNTRY=Germany
 for SEED in 2021 2022 2023 2024 2025
 do
     EXP_NAME="${EXP_NAME_ORIG}_${SEED}"
-    python3 ../train.py model=$MODEL_NAME datasets=[nsgo-2c] \
+    python3 train.py model=$MODEL_NAME datasets=[nsgo-2c] \
         seed=$SEED \
         loss=dpo loss.beta=0.1 \
         model.archive=.cache/$DIRECTORY_SFT/LATEST/policy.pt \
@@ -22,7 +22,7 @@ do
         batch_size=24 eval_batch_size=12 trainer=BasicTrainer sample_during_eval=false \
         ++wandb.key=$WANDB_KEY ++wandb.enabled=$USE_WANDB \
         ++wandb.entity=$WANDB_ENTITY ++wandb.project=nsdpo ++test_dataset=false \
-        ++dataset.timesteps=100 ++dataset.force_new=true ++dataset.sample_to_size=10000 \
+        ++dataset.timesteps=100 ++dataset.force_new=true ++dataset.sample_to_size=1000 \
         ++dataset.coef_shift=1.0 ++dataset.threshold_high=0.99 ++dataset.threshold_low=0.01 ++dataset.remove_timestep=true \
         ++dataset.country2=$TARGET_COUNTRY ++dataset.min_diff=0.2
 done
