@@ -651,11 +651,12 @@ def get_nsgo(split:str, silent:bool = False,
 
 def get_ufb_2rm(
     split,
+    silent, 
+    cache_dir,
     path_train=None,
     path_test=None,
     **kwargs
 ):
-    
     #Return the correct split:
     if split == 'train':
         print(f'loading dataset from {path_train}')

@@ -113,7 +113,7 @@ def create_list_defaultdict():
 
 def get_tvhh(split:str, silent:bool = False,
              cache_dir:str=None, force_new:bool=False,
-             timesteps:int=5, sample_to_size:int=50000,
+             timesteps:int=5, sample_to_size:int=1000,
              changepoint:int=0, test_dataset:bool=False,
              init_reward_index:int=0, final_reward_index:int=1,
              device:str='cuda', max_length:int=256,
@@ -404,7 +404,7 @@ def adjust_preference_label(preferences, time, changepoint,
 
 def get_tvhh2(split:str, silent:bool = False,
              cache_dir:str=None, force_new:bool=False,
-             timesteps:int=5, sample_to_size:int=50000,
+             timesteps:int=5, sample_to_size:int=1000,
              changepoint:int=0, test_dataset:bool=False,
              init_reward_index:int=0, final_reward_index:int=1,
              device:str='cuda', max_length:int=256,
@@ -643,7 +643,7 @@ if __name__ == '__main__':
     
     data = get_tvhh2(split='train', silent=True,
                     cache_dir='.\.cache\William', force_new=True,
-                    timesteps=20, sample_to_size=50000,
+                    timesteps=20, sample_to_size=1000,
                     changepoint=17, device='cpu', max_length=10,
                     test_dataset=True, train_changes_percent=False, gradual=True)
                     #test_changes_only=True)
