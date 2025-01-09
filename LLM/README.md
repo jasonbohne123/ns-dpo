@@ -17,4 +17,8 @@ Our implementation of this repository is an adaptation from eric-mitchell's [DPO
     - Use the directory of the saved SFT model to assign `$DIRECTORY_SFT` variable inside the NS-DPO training script. 
 
 
-
+conda activate dpo_env
+conda install pip
+conda install python==3.9
+pip install -r requirements.txt
+pip install huggingface-hub==0.27.0
