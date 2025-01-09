@@ -4,8 +4,8 @@ USE_WANDB=false
 WANDB_KEY=SET_VALUE
 WANDB_ENTITY=SET_VALUE
 
-MODEL_NAME=tiny-mistral
-# MODEL_NAME=llama2-7b-chat-hf
+#MODEL_NAME=tiny-mistral
+MODEL_NAME=llama3.2-1b-instruct
 EXP_NAME=hh-sft-$MODEL_NAME
 
 

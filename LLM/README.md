@@ -17,4 +17,12 @@ Our implementation of this repository is an adaptation from eric-mitchell's [DPO
     - Use the directory of the saved SFT model to assign `$DIRECTORY_SFT` variable inside the NS-DPO training script. 
 
 
+Llama 3.2 1B Instruct Error
+pip install -U "huggingface_hub[cli]"
+huggingface-cli login (use access token)
 
+
+rope_scaling error: Updgrade transformers 
+
+To monitor disk space
+`du -sch .[!.]* * |sort -h`

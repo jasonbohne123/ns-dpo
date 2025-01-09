@@ -1,13 +1,13 @@
 #!/bin/bash
 
-DIRECTORY_SFT=sagemaker-user/hh-sft-llama3.2-1b-instruct_2025-01-09_19-42-01_881276    
+DIRECTORY_SFT=sagemaker-user/ufb-sft-tiny-mistral_2025-01-09_14-57-43_198794
 USE_WANDB=false
 WANDB_KEY=SET_VALUE
 WANDB_ENTITY=SET_VALUE
 
-#MODEL_NAME=tiny-mistral
-MODEL_NAME=llama3.2-1b-instruct
-EXP_NAME_ORIG=hh-sft-$MODEL_NAME
+MODEL_NAME=tiny-mistral
+# MODEL_NAME=llama2-7b-chat-hf
+EXP_NAME_ORIG=ufb-sft-$MODEL_NAME
 
 for SEED in 2021 2022 2023 2024 2025
 do
