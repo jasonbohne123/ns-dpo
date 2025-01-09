@@ -492,7 +492,8 @@ def get_dataset(name: str, split: str, silent: bool = False, cache_dir: str = No
     elif name == 'nsgo-2c':
         data = get_nsgo_2countries(split, silent=silent, cache_dir=cache_dir, **kwargs)
     elif name == 'ufb-2rm':
-        data = get_ufb_2rm(split, silent=silent, cache_dir=cache_dir, **kwargs)
+        combined_split=split+'_sft'
+        data = get_ufb_2rm(split=combined_split, silent=silent, cache_dir=cache_dir, **kwargs)
     elif name == 'tvhh':
         data = get_tvhh(split, silent=silent, cache_dir=cache_dir, test_dataset=test, **kwargs)
     elif name == 'tvhh2':

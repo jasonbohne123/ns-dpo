@@ -179,6 +179,10 @@ def get_tvhh(split:str, silent:bool = False,
             
         ########################## FILTER DATASET #############################
         #TODO: To do this step once the dataset is outputting
+
+        # for computational efficiency
+        df=df.iloc[:1000]
+        print("Only using first 1000 elements for efficiency")
         
         if test_dataset:
             df = df.iloc[:10000]  
@@ -471,6 +475,10 @@ def get_tvhh2(split:str, silent:bool = False,
             
         ########################## FILTER DATASET #############################
         #TODO: To do this step once the dataset is outputting
+
+        # for computational efficiency
+        df=df.iloc[:1000]
+        print("Only using first 1000 elements for efficiency")
         
         if test_dataset:
             df = df.iloc[:10000]  
