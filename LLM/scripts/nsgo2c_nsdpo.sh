@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIRECTORY_SFT=jbohne/nsgo2c-sft-tiny-mistral_2025-01-06_10-22-27_133993
+DIRECTORY_SFT=sagemaker-user/
 
 USE_WANDB=false
 WANDB_KEY=SET_VALUE

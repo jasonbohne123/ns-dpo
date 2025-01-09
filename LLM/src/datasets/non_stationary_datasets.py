@@ -19,6 +19,8 @@ import pandas as pd
 import numpy as np
 from collections import defaultdict
 from transformers import pipeline
+from datasets import load_dataset
+import tqdm
 from typing import Dict, List, Optional, Iterator, Callable, Union, Tuple
               
 COUNTRIES=[
@@ -649,27 +651,76 @@ def get_nsgo(split:str, silent:bool = False,
         
     return output
 
-def get_ufb_2rm(
-    split,
-    silent, 
-    cache_dir,
-    path_train=None,
-    path_test=None,
-    **kwargs
-):
-    #Return the correct split:
-    if split == 'train':
-        print(f'loading dataset from {path_train}')
-        with open(path_train, 'rb') as f:
-            df_train = pickle.load(f)
-        output = df_train
-    elif split == 'test':
-        print(f'loading dataset from {path_test}')
-        with open(path_test, 'rb') as f:
-            df_test = pickle.load(f)
-        output = df_test
-    else:
-        raise NotImplementedError(f'get_ufb_2rm split type: {split} not implemented')
+# def get_ufb_2rm(
+#     split,
+#     silent, 
+#     cache_dir,
+#     path_train=None,
+#     path_test=None,
+#     **kwargs
+# ):
+#     create_ufb_2rm_dataset
+    
+#     #Return the correct split:
+#     if split == 'train':
+#         print(f'loading dataset from {path_train}')
+#         with open(path_train, 'rb') as f:
+#             df_train = pickle.load(f)
+#         output = df_train
+#     elif split == 'test':
+#         print(f'loading dataset from {path_test}')
+#         with open(path_test, 'rb') as f:
+#             df_test = pickle.load(f)
+#         output = df_test
+#     else:
+#         raise NotImplementedError(f'get_ufb_2rm split type: {split} not implemented')
         
-    return output
+#     return output
+def get_ufb_2rm(split: str, silent: bool = False, cache_dir: str = None) -> Dict[str, Dict[str, Union[List[Tuple[int, int]], List[str], str]]]:
+    """
+    Load the UltraFeedback Binarized dataset from HuggingFace and convert it to the required format.
+
+    The dataset is converted to a dictionary with the following structure:
+    {
+        'prompt1': {
+            'responses': List[str],
+            'pairs': List[Tuple[int, int]],
+            'sft_target': str
+        },
+        'prompt2': {
+            ...
+        },
+    }
+
+    Prompts are structured as follows:
+      - Each prompt corresponds to the "prompt" field in the dataset.
+      - The chosen and rejected responses are added as part of the responses list.
+      - The SFT target is the chosen response.
+    """
+    print(f'Loading UltraFeedback dataset ({split} split) from HuggingFace...')
+    dataset = load_dataset('HuggingFaceH4/ultrafeedback_binarized', split=split, cache_dir=cache_dir)
+    print('done')
+
+    data = defaultdict(lambda: defaultdict(list))
+    ct=0
+    for row in tqdm.tqdm(dataset, desc=f'Processing UltraFeedback ({split})', disable=silent):
+        prompt = row['prompt']
+        chosen_response = row['chosen'][-1]['content']  # Extract the last message content in 'chosen'
+        rejected_response = row['rejected'][-1]['content']  # Extract the last message content in 'rejected'
+
+        # Add responses and pairs
+        responses = [chosen_response, rejected_response]
+        n_responses = len(data[prompt]['responses'])
+        data[prompt]['pairs'].append((n_responses, n_responses + 1))
+        data[prompt]['responses'].extend(responses)
+
+        # Set the SFT target as the chosen response
+        data[prompt]['sft_target'] = chosen_response
+        ct+=1
+        if ct>1000:
+            print("Using 1000 observations for efficiency")
+            break
+
+    return data
+
     
